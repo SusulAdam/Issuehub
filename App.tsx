@@ -1,17 +1,9 @@
 import React from 'react';
 import {Text, View} from 'react-native';
+import {Navigation} from './src/components';
 
-const App = () => {
-  return (
-    <View
-      style={{
-        justifyContent: 'center',
-        alignItems: 'center',
-        flex: 1,
-      }}>
-      <Text>Initial</Text>
-    </View>
-  );
+const App = (): JSX.Element => {
+  return <Navigation />;
 };
 
 export default App;
