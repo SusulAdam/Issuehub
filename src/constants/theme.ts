@@ -1,3 +1,3 @@
 export const COLORS = {
-  error: '#ff2c2c2',
+  error: '#ff2c2c',
 };

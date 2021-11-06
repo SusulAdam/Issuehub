@@ -13,6 +13,6 @@ export const loadingStyle: LoadingStyle = {
     flex: 1,
   },
   text: {
-    fontSize: 25,
+    fontSize: 20,
   },
 };
