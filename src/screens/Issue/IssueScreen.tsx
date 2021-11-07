@@ -103,7 +103,7 @@ const IssueScreen = (): JSX.Element => {
             />
             <AnimatedButton
               style={issueScreenStyle.button}
-              rippleColor="red"
+              rippleColor="#6a4e8a'"
               onPress={() => save(textInputValue)}>
               <Text style={issueScreenStyle.textButton}>Add</Text>
             </AnimatedButton>

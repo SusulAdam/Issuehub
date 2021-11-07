@@ -60,7 +60,7 @@ const AnimatedButton = (props: AnimatedButtonProps): JSX.Element => {
         onPressOut={onPressOut}
         style={[style, {opacity: animatedOpacity.current}]}
         android_ripple={{
-          color: rippleColor,
+          color: `${rippleColor}80`,
         }}>
         {children}
       </AnimatedPressable>
