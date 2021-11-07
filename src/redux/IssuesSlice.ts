@@ -57,7 +57,7 @@ export const fetchIssue = createAsyncThunk<{isssue: OneIssue}, {url: string}>(
 
     if (response.kind === 'success') {
       return {
-        isssue: response.body ?? {body: '', state: '', title: ''},
+        isssue: response.body ?? {body: '', state: '', title: '', url: ''},
       };
     } else {
       throw 'Error fetching issue';

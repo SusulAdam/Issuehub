@@ -15,5 +15,6 @@ export const loadingStyle: LoadingStyle = {
   },
   text: {
     fontSize: 20,
+    color: '#ffffff',
   },
 };

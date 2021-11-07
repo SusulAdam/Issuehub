@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect} from 'react';
-import {FlatList, Text, TextInput, View} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {FlatList, Keyboard, Text, TextInput, View} from 'react-native';
 import {homeStyles} from './HomeScreen.style';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../redux/store';
@@ -9,13 +9,14 @@ import {
   fetchIssuesPagination,
   Issue,
 } from '../../redux/IssuesSlice';
-import {AnimatedButton} from '../../components/animatedButton';
 
 const HomeScreen = ({navigation}: {navigation: any}): JSX.Element => {
   const dispatch = useDispatch();
   const reduxState = useSelector((state: RootState) => state.issues);
 
   const [mounted, setMounted] = React.useState(true);
+
+  const [textInputValue, onChangetextInputValue] = useState('');
 
   useEffect(() => {
     dispatch(fetchIssuesPagination({page: 1}));
@@ -53,6 +54,10 @@ const HomeScreen = ({navigation}: {navigation: any}): JSX.Element => {
   );
 
   const onScroll = useCallback(() => setMounted(false), []);
+  const handleTyping = useCallback(e => {
+    setMounted(false);
+    onChangetextInputValue(e);
+  }, []);
 
   return (
     <>
@@ -62,23 +67,20 @@ const HomeScreen = ({navigation}: {navigation: any}): JSX.Element => {
           <Text>Error- please reload app</Text>
         </Error>
       )}
-      <View style={homeStyles.container}>
+      <View style={homeStyles.container} onTouchStart={Keyboard.dismiss}>
         <View style={homeStyles.textInputContainer}>
           <TextInput
             placeholder="Search"
             placeholderTextColor="#ffffff"
             style={homeStyles.textInput}
+            onChangeText={handleTyping}
+            value={textInputValue}
           />
-          <AnimatedButton
-            rippleColor="#754545"
-            style={homeStyles.button}
-            // onPress={onPress}>
-          >
-            <Text style={homeStyles.buttonText}>Submit</Text>
-          </AnimatedButton>
         </View>
         <FlatList
-          data={reduxState.issues}
+          data={reduxState.issues.filter(item =>
+            item.title.includes(textInputValue),
+          )}
           keyExtractor={keyExtractor}
           onEndReached={handleOnEndReached}
           renderItem={renderItem}

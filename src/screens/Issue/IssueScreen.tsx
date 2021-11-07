@@ -29,7 +29,7 @@ const IssueScreen = (): JSX.Element => {
 
   const [textInputValue, onChangetextInputValue] = useState('');
 
-  const [state, setValue] = useState<{desc: string; url: string}[]>([]);
+  const [state, setValue] = useState<{desc: string; url?: string}[]>([]);
 
   useEffect(() => {
     retrieveData();
@@ -47,7 +47,7 @@ const IssueScreen = (): JSX.Element => {
     }
   };
 
-  const save = async name => {
+  const save = async (name: string) => {
     const listOfTasks = [
       ...state,
       {desc: name, url: reduxState.selectedIssue?.url},
@@ -60,8 +60,6 @@ const IssueScreen = (): JSX.Element => {
       console.log(e);
     }
   };
-
-  console.log(state);
 
   return (
     <>

@@ -4,8 +4,6 @@ type HomeStyles = {
   container: ViewStyle;
   textInputContainer: ViewStyle;
   textInput: TextStyle;
-  buttonText: TextStyle;
-  button: ViewStyle;
 };
 
 export const homeStyles: HomeStyles = {
@@ -29,17 +27,5 @@ export const homeStyles: HomeStyles = {
     borderRadius: 25,
     fontSize: 17,
     paddingLeft: 25,
-  },
-  button: {
-    width: '100%',
-    marginTop: 10,
-    height: 20,
-    borderRadius: 25,
-    maxWidth: 400,
-    backgroundColor: '#6a4e8a',
-  },
-  buttonText: {
-    textAlign: 'center',
-    color: 'white',
   },
 };
