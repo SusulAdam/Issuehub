@@ -4,7 +4,11 @@ import {homeStyles} from './HomeScreen.style';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../redux/store';
 import {Loading, Error, IssueItem} from '../../components';
-import {fetchIssuesPagination, Issue} from '../../redux/IssuesSlice';
+import {
+  fetchIssue,
+  fetchIssuesPagination,
+  Issue,
+} from '../../redux/IssuesSlice';
 
 const HomeScreen = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -26,9 +30,12 @@ const HomeScreen = (): JSX.Element => {
 
   const renderItem = useCallback(
     ({item, index}: {item: Issue; index: number}) => (
-      <IssueItem title={item.title} index={index} />
+      <>
+        <Text onPress={() => dispatch(fetchIssue({url: item.url}))}>CLICk</Text>
+        <IssueItem title={item.title} index={index} />
+      </>
     ),
-    [],
+    [dispatch],
   );
 
   const onScroll = useCallback(() => setMounted(false), []);
@@ -42,6 +49,7 @@ const HomeScreen = (): JSX.Element => {
         </Error>
       )}
       <View style={homeStyles.container}>
+        <Text> {JSON.stringify(reduxState.selectedIssue?.state)}</Text>
         <FlatList
           data={reduxState.issues}
           keyExtractor={keyExtractor}

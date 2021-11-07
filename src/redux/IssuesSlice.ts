@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {fetchIssues} from './api';
+import {fetchIssues, fetchOneIssue} from './api';
 
 export type Issue = {
   title: string;
@@ -7,11 +7,18 @@ export type Issue = {
   id: number;
 };
 
+export type OneIssue = {
+  state: string;
+  body: any;
+  title: string;
+};
+
 export type IssuesSliceState = {
   issues: Issue[];
   issuesError: boolean;
   issuesLoading: boolean;
   nextPage: number;
+  selectedIssue: OneIssue | undefined;
 };
 
 const initialState: IssuesSliceState = {
@@ -19,6 +26,7 @@ const initialState: IssuesSliceState = {
   issuesLoading: false,
   issuesError: false,
   nextPage: 1,
+  selectedIssue: undefined,
 };
 
 export const fetchIssuesPagination = createAsyncThunk<
@@ -32,9 +40,24 @@ export const fetchIssuesPagination = createAsyncThunk<
       issues: response.body ?? [],
     };
   } else {
-    throw 'Error fetching users';
+    throw 'Error fetching issues';
   }
 });
+
+export const fetchIssue = createAsyncThunk<{isssue: OneIssue}, {url: string}>(
+  'fetchOneIssue',
+  async ({url}) => {
+    const response = await fetchOneIssue(url);
+
+    if (response.kind === 'success') {
+      return {
+        isssue: response.body ?? {body: '', state: '', title: ''},
+      };
+    } else {
+      throw 'Error fetching issue';
+    }
+  },
+);
 
 const issuesSlice = createSlice({
   name: 'issuesSlice',
@@ -54,6 +77,9 @@ const issuesSlice = createSlice({
       .addCase(fetchIssuesPagination.rejected, state => {
         state.issuesError = true;
         state.issuesLoading = false;
+      })
+      .addCase(fetchIssue.fulfilled, (state, action) => {
+        state.selectedIssue = action.payload.isssue;
       });
   },
 });

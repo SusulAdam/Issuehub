@@ -1,4 +1,4 @@
-import type {Issue} from './IssuesSlice';
+import type {Issue, OneIssue} from './IssuesSlice';
 
 type ResponseKind = 'success' | 'failure';
 
@@ -27,6 +27,31 @@ export const fetchIssues = async (
     return {
       kind: 'success',
       body: json,
+    };
+  } else {
+    return {
+      kind: 'failure',
+    };
+  }
+};
+
+export const fetchOneIssue = async (
+  url: string,
+): Promise<NetworkResponse<OneIssue>> => {
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const json = await response.json();
+
+  if (response.ok) {
+    return {
+      body: json,
+      kind: 'success',
     };
   } else {
     return {
