@@ -30,7 +30,7 @@ const initialState: IssuesSliceState = {
   issuesLoading: false,
   issuesError: false,
   nextPage: 1,
-  selectedIssue: {body: '', state: '', title: ''},
+  selectedIssue: {body: '', state: '', title: '', url: ''},
   selectedIssueLoading: false,
   selectedIssueError: false,
 };

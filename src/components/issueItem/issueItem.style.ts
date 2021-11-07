@@ -3,6 +3,7 @@ import {Platform, TextStyle, ViewStyle} from 'react-native';
 type IssueItemStyle = {
   container: ViewStyle;
   title: TextStyle;
+  buttonText: TextStyle;
   EvenItem: ViewStyle;
   OddItem: ViewStyle;
   button: ViewStyle;
@@ -10,30 +11,36 @@ type IssueItemStyle = {
 
 export const issueItemStyle: IssueItemStyle = {
   container: {
-    maxWidth: 350,
-    borderRadius: 50,
+    maxWidth: 300,
+    borderRadius: 7,
     paddingHorizontal: 25,
-    paddingVertical: 30,
-    flexDirection: 'row',
-    justifyContent: 'center',
+    paddingTop: 30,
+    paddingBottom: 15,
+    justifyContent: 'space-between',
     alignItems: 'center',
     borderWidth: 1,
-
     marginBottom: 10,
   },
   title: {
-    fontSize: 20,
+    fontSize: 15,
+    color: '#ffffff',
   },
   EvenItem: {
-    backgroundColor: '#cccccc',
+    backgroundColor: '#5a5368',
   },
   OddItem: {
-    backgroundColor: '#a3a0a0',
+    backgroundColor: '#35313d',
+  },
+  buttonText: {
+    width: '100%',
+    textAlign: 'center',
+    color: '#ffffff',
   },
   button: {
-    width: 40,
-    borderRadius: 30,
-    height: 40,
+    borderRadius: 7,
+    minWidth: '100%',
+    height: 30,
+    marginTop: 30,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
@@ -46,8 +53,8 @@ export const issueItemStyle: IssueItemStyle = {
     elevation: 2,
     overflow: 'hidden',
     backgroundColor: Platform.select({
-      ios: 'red',
-      android: 'rgb(255,55,66)',
+      ios: '#e15c5c',
+      android: '#e15c5c',
     }),
   },
 };

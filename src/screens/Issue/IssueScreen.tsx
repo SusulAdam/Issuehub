@@ -88,6 +88,13 @@ const IssueScreen = (): JSX.Element => {
             contentContainerStyle={issueScreenStyle.contentContainerScroll}
             style={issueScreenStyle.scroll}>
             <Text style={issueScreenStyle.description}>{text}</Text>
+            <Text style={issueScreenStyle.titleComment}>COMMENTS:</Text>
+            <Text style={issueScreenStyle.singleComment}>
+              sasasas as asa s as as a:
+            </Text>
+            <Text style={issueScreenStyle.singleComment}>
+              sasasas as asa s as as a:
+            </Text>
           </ScrollView>
           <View style={issueScreenStyle.containerInput}>
             <TextInput

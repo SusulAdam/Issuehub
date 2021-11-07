@@ -11,6 +11,7 @@ export const loadingStyle: LoadingStyle = {
     alignItems: 'center',
     flexDirection: 'row',
     flex: 1,
+    backgroundColor: '#1d1c1f',
   },
   text: {
     fontSize: 20,

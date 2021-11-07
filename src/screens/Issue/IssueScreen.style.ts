@@ -9,6 +9,8 @@ type IssueScreenStyle = {
   scroll: ViewStyle;
   containerInput: ViewStyle;
   textButton: TextStyle;
+  titleComment: TextStyle;
+  singleComment: TextStyle;
   button: ViewStyle;
   contentContainerScroll: ViewStyle;
   keyBoard: ViewStyle;
@@ -38,7 +40,7 @@ export const issueScreenStyle: IssueScreenStyle = {
     fontSize: 14,
   },
   scroll: {
-    maxHeight: '50%',
+    maxHeight: '90%',
     height: '100%',
     marginBottom: 30,
     marginTop: 10,

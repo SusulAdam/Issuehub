@@ -25,10 +25,10 @@ const IssueItem = (props: IssueItemProps): JSX.Element => {
     <View style={[issueItemStyle.container, handleEvenOrOddItem]}>
       <Text style={issueItemStyle.title}>{title}</Text>
       <AnimatedButton
-        rippleColor="blue"
+        rippleColor="#754545"
         style={issueItemStyle.button}
         onPress={onPress}>
-        <Text>i</Text>
+        <Text style={issueItemStyle.buttonText}>More info</Text>
       </AnimatedButton>
     </View>
   );
