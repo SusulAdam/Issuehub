@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
-import {FlatList, Text, View} from 'react-native';
+import {FlatList, Text, TextInput, View} from 'react-native';
 import {homeStyles} from './HomeScreen.style';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../redux/store';
@@ -9,6 +9,7 @@ import {
   fetchIssuesPagination,
   Issue,
 } from '../../redux/IssuesSlice';
+import {AnimatedButton} from '../../components/animatedButton';
 
 const HomeScreen = ({navigation}: {navigation: any}): JSX.Element => {
   const dispatch = useDispatch();
@@ -62,6 +63,20 @@ const HomeScreen = ({navigation}: {navigation: any}): JSX.Element => {
         </Error>
       )}
       <View style={homeStyles.container}>
+        <View style={homeStyles.textInputContainer}>
+          <TextInput
+            placeholder="Search"
+            placeholderTextColor="#ffffff"
+            style={homeStyles.textInput}
+          />
+          <AnimatedButton
+            rippleColor="#754545"
+            style={homeStyles.button}
+            // onPress={onPress}>
+          >
+            <Text style={homeStyles.buttonText}>Submit</Text>
+          </AnimatedButton>
+        </View>
         <FlatList
           data={reduxState.issues}
           keyExtractor={keyExtractor}

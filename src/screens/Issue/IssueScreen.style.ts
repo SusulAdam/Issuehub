@@ -22,21 +22,25 @@ export const issueScreenStyle: IssueScreenStyle = {
     flex: 1,
     paddingHorizontal: 30,
     paddingBottom: 30,
+    backgroundColor: '#1d1c1f',
   },
   title: {
     marginTop: 10,
-    fontSize: 18,
+    fontSize: 20,
+    fontWeight: '700',
     textAlign: 'center',
+    color: '#ffffff',
   },
   state: {
     marginTop: 2,
     textAlign: 'center',
-    fontSize: 12,
+    color: '#ffffff',
+    fontSize: 14,
     textDecorationLine: 'underline',
   },
   description: {
     marginTop: 10,
-    textAlign: 'center',
+    color: '#ffffff',
     fontSize: 14,
   },
   scroll: {
@@ -47,24 +51,28 @@ export const issueScreenStyle: IssueScreenStyle = {
   },
   contentContainerScroll: {
     flexGrow: 1,
+    paddingHorizontal: 10,
   },
   textInput: {
-    backgroundColor: 'red',
-    width: 200,
-    height: 50,
+    maxWidth: 230,
     marginRight: 10,
-    borderRadius: 20,
-    paddingLeft: 10,
+    backgroundColor: 'rgba(255,255,255, 0.5)',
+    width: '100%',
+    height: 35,
+    borderRadius: 25,
+    fontSize: 17,
+    paddingLeft: 25,
   },
   textButton: {
     fontSize: 15,
     paddingVertical: 10,
     paddingHorizontal: 20,
+    color: '#ffffff',
   },
   button: {
     borderRadius: 30,
     maxWidth: 100,
-    backgroundColor: '#cccccc',
+    backgroundColor: '#6a4e8a',
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
@@ -77,5 +85,18 @@ export const issueScreenStyle: IssueScreenStyle = {
   },
   keyBoard: {
     flex: 1,
+  },
+  singleComment: {
+    color: '#ffffff',
+    backgroundColor: '#35313d',
+    marginVertical: 10,
+    borderRadius: 30,
+
+    padding: 10,
+  },
+  titleComment: {
+    color: '#ffffff',
+    fontSize: 20,
+    fontWeight: '700',
   },
 };

@@ -88,9 +88,10 @@ const IssueScreen = (): JSX.Element => {
             contentContainerStyle={issueScreenStyle.contentContainerScroll}
             style={issueScreenStyle.scroll}>
             <Text style={issueScreenStyle.description}>{text}</Text>
-            <Text style={issueScreenStyle.titleComment}>COMMENTS:</Text>
+            <Text style={issueScreenStyle.titleComment}>Comments:</Text>
             <Text style={issueScreenStyle.singleComment}>
-              sasasas as asa s as as a:
+              sasasas as asa s as as a: sasasas as asa s as as a: sasasas as asa
+              s as as a: sasasas as asa s as as a: sasasas as asa s as as a:
             </Text>
             <Text style={issueScreenStyle.singleComment}>
               sasasas as asa s as as a:
@@ -98,6 +99,7 @@ const IssueScreen = (): JSX.Element => {
           </ScrollView>
           <View style={issueScreenStyle.containerInput}>
             <TextInput
+              placeholderTextColor="#ffffff"
               style={issueScreenStyle.textInput}
               placeholder="Comment"
               value={textInputValue}
