@@ -12,7 +12,9 @@ import {RootState} from '../../redux/store';
 import {Loading, Error} from '../../components';
 import {issueScreenStyle} from './IssueScreen.style';
 import {AnimatedButton} from '../../components/animatedButton';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage, {
+  useAsyncStorage,
+} from '@react-native-async-storage/async-storage';
 
 const IssueScreen = (): JSX.Element => {
   const reduxState = useSelector((state: RootState) => state.issues);
@@ -31,36 +33,33 @@ const IssueScreen = (): JSX.Element => {
   const [state, setValue] = useState<{desc: string; url: string}[]>([]);
 
   useEffect(() => {
-    getData();
+    retrieveData();
   }, []);
 
-  const storeData = async value => {
+  const retrieveData = async () => {
     try {
-      const jsonValue = JSON.stringify(value);
-      console.log(jsonValue);
-      await AsyncStorage.setItem('@storage_Key', jsonValue);
+      const name = await AsyncStorage.getItem('@storage_Key');
+
+      if (name !== null) {
+        setValue([...JSON.parse(name)]);
+      }
     } catch (e) {
-      // saving error
+      console.log(e);
     }
   };
 
-  const handleComment = () => {
-    storeData({desc: textInputValue, url: reduxState.selectedIssue?.url});
-    onChangetextInputValue('');
-  };
-
-  const getData = async () => {
+  const save = async name => {
+    const listOfTasks = [...state, {desc: name, url: 'x'}];
     try {
-      const jsonValue = await AsyncStorage.getItem('@storage_Key');
-      setValue(prevState => ({
-        ...prevState,
-        jsonValue,
-      }));
-      return jsonValue != null ? JSON.parse(jsonValue) : null;
+      await AsyncStorage.setItem('@storage_Key', JSON.stringify(listOfTasks));
+
+      setValue(listOfTasks);
     } catch (e) {
-      // error reading value
+      console.log(e);
     }
   };
+
+  console.log(state);
 
   return (
     <>
@@ -100,7 +99,7 @@ const IssueScreen = (): JSX.Element => {
             <AnimatedButton
               style={issueScreenStyle.button}
               rippleColor="red"
-              onPress={handleComment}>
+              onPress={() => save(textInputValue)}>
               <Text style={issueScreenStyle.textButton}>Add</Text>
             </AnimatedButton>
           </View>
