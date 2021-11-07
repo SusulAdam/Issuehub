@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -71,6 +72,7 @@ const IssueScreen = (): JSX.Element => {
       )}
       <KeyboardAvoidingView
         style={issueScreenStyle.keyBoard}
+        onTouchStart={Keyboard.dismiss}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <View style={issueScreenStyle.container}>
           <Text style={issueScreenStyle.title}>
