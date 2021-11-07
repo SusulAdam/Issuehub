@@ -9,5 +9,6 @@ export const homeStyles: HomeStyles = {
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
+    marginTop: 10,
   },
 };

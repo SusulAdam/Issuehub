@@ -1,14 +1,16 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useLayoutEffect} from 'react';
 import {FlatList, Text, View} from 'react-native';
 import {homeStyles} from './HomeScreen.style';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../redux/store';
-import {Loading, Error} from '../../components';
+import {Loading, Error, IssueItem} from '../../components';
 import {fetchIssuesPagination, Issue} from '../../redux/IssuesSlice';
 
 const HomeScreen = (): JSX.Element => {
   const dispatch = useDispatch();
   const reduxState = useSelector((state: RootState) => state.issues);
+
+  const [mounted, setMounted] = React.useState(true);
 
   useEffect(() => {
     dispatch(fetchIssuesPagination({page: 1}));
@@ -23,30 +25,31 @@ const HomeScreen = (): JSX.Element => {
   const keyExtractor = useCallback((_, index: number) => `key: ${index}`, []);
 
   const renderItem = useCallback(
-    ({item}: {item: Issue}) => (
-      <View style={homeStyles.container}>
-        <Text>{item.id}</Text>
-        <Text>{item.title}</Text>
-        <Text>{item.url}</Text>
-      </View>
+    ({item, index}: {item: Issue; index: number}) => (
+      <IssueItem title={item.title} index={index} />
     ),
     [],
   );
 
+  const onScroll = useCallback(() => setMounted(false), []);
+
   return (
     <>
-      {reduxState.issuesLoading && <Loading />}
+      {reduxState.issuesLoading && mounted && <Loading />}
       {reduxState.issuesError && (
         <Error>
           <Text>Error- please reload app</Text>
         </Error>
       )}
-      <FlatList
-        data={reduxState.issues}
-        keyExtractor={keyExtractor}
-        onEndReached={handleOnEndReached}
-        renderItem={renderItem}
-      />
+      <View style={homeStyles.container}>
+        <FlatList
+          data={reduxState.issues}
+          keyExtractor={keyExtractor}
+          onEndReached={handleOnEndReached}
+          renderItem={renderItem}
+          onScroll={onScroll}
+        />
+      </View>
     </>
   );
 };
