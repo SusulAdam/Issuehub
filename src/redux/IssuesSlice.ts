@@ -85,6 +85,7 @@ const issuesSlice = createSlice({
       })
       .addCase(fetchIssue.fulfilled, (state, action) => {
         state.selectedIssue = action.payload.isssue;
+        state.selectedIssueLoading = false;
       })
       .addCase(fetchIssue.rejected, state => {
         state.selectedIssueError = true;
