@@ -12,9 +12,8 @@ import {RootState} from '../../redux/store';
 import {Loading, Error} from '../../components';
 import {issueScreenStyle} from './IssueScreen.style';
 import {AnimatedButton} from '../../components/animatedButton';
-import AsyncStorage, {
-  useAsyncStorage,
-} from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {nanoid} from '@reduxjs/toolkit';
 
 const IssueScreen = (): JSX.Element => {
   const reduxState = useSelector((state: RootState) => state.issues);
@@ -49,7 +48,10 @@ const IssueScreen = (): JSX.Element => {
   };
 
   const save = async name => {
-    const listOfTasks = [...state, {desc: name, url: 'x'}];
+    const listOfTasks = [
+      ...state,
+      {desc: name, url: reduxState.selectedIssue?.url},
+    ];
     try {
       await AsyncStorage.setItem('@storage_Key', JSON.stringify(listOfTasks));
 
@@ -73,11 +75,6 @@ const IssueScreen = (): JSX.Element => {
         style={issueScreenStyle.keyBoard}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <View style={issueScreenStyle.container}>
-          {/* {state !== [] &&
-            state.map(item => {
-              return <Text>{item.desc}</Text>;
-            })} */}
-          {/* //   <Text>{state.map((item)=> )}</Text> */}
           <Text style={issueScreenStyle.title}>
             {reduxState.selectedIssue?.title}
           </Text>
@@ -89,13 +86,14 @@ const IssueScreen = (): JSX.Element => {
             style={issueScreenStyle.scroll}>
             <Text style={issueScreenStyle.description}>{text}</Text>
             <Text style={issueScreenStyle.titleComment}>Comments:</Text>
-            <Text style={issueScreenStyle.singleComment}>
-              sasasas as asa s as as a: sasasas as asa s as as a: sasasas as asa
-              s as as a: sasasas as asa s as as a: sasasas as asa s as as a:
-            </Text>
-            <Text style={issueScreenStyle.singleComment}>
-              sasasas as asa s as as a:
-            </Text>
+            {state !== [] &&
+              state
+                .filter(item => item.url === reduxState.selectedIssue?.url)
+                .map(item => (
+                  <Text style={issueScreenStyle.singleComment} key={nanoid()}>
+                    {item.desc}
+                  </Text>
+                ))}
           </ScrollView>
           <View style={issueScreenStyle.containerInput}>
             <TextInput
