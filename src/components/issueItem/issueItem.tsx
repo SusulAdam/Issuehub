@@ -4,10 +4,14 @@ import {Issue} from '../../redux/IssuesSlice';
 import {AnimatedButton} from '../animatedButton/animatedButton';
 import {issueItemStyle} from './issueItem.style';
 
-type IssueItemProps = Partial<Issue> & {index: number};
+type IssueItemProps = Partial<Issue> & {
+  index: number;
+} & {
+  onPress: (event: any) => void;
+};
 
 const IssueItem = (props: IssueItemProps): JSX.Element => {
-  const {title, index} = props;
+  const {title, index, onPress} = props;
 
   const handleEvenOrOddItem = useMemo(() => {
     if (index % 2) {
@@ -20,7 +24,10 @@ const IssueItem = (props: IssueItemProps): JSX.Element => {
   return (
     <View style={[issueItemStyle.container, handleEvenOrOddItem]}>
       <Text style={issueItemStyle.title}>{title}</Text>
-      <AnimatedButton rippleColor="blue" style={issueItemStyle.button}>
+      <AnimatedButton
+        rippleColor="blue"
+        style={issueItemStyle.button}
+        onPress={onPress}>
         <Text>i</Text>
       </AnimatedButton>
     </View>

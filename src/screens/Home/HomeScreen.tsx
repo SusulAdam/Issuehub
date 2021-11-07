@@ -10,7 +10,7 @@ import {
   Issue,
 } from '../../redux/IssuesSlice';
 
-const HomeScreen = (): JSX.Element => {
+const HomeScreen = ({navigation}: {navigation: any}): JSX.Element => {
   const dispatch = useDispatch();
   const reduxState = useSelector((state: RootState) => state.issues);
 
@@ -28,14 +28,27 @@ const HomeScreen = (): JSX.Element => {
 
   const keyExtractor = useCallback((_, index: number) => `key: ${index}`, []);
 
+  const handleNavigateToIssueScreen = useCallback(
+    (item: Issue) => {
+      dispatch(fetchIssue({url: item.url}));
+      navigation.navigate('IssueScreen', {
+        name: `Issue number: ${item.number}`,
+      });
+    },
+    [dispatch, navigation],
+  );
+
   const renderItem = useCallback(
     ({item, index}: {item: Issue; index: number}) => (
       <>
-        <Text onPress={() => dispatch(fetchIssue({url: item.url}))}>CLICk</Text>
-        <IssueItem title={item.title} index={index} />
+        <IssueItem
+          title={item.title}
+          index={index}
+          onPress={() => handleNavigateToIssueScreen(item)}
+        />
       </>
     ),
-    [dispatch],
+    [handleNavigateToIssueScreen],
   );
 
   const onScroll = useCallback(() => setMounted(false), []);
@@ -49,7 +62,6 @@ const HomeScreen = (): JSX.Element => {
         </Error>
       )}
       <View style={homeStyles.container}>
-        <Text> {JSON.stringify(reduxState.selectedIssue?.state)}</Text>
         <FlatList
           data={reduxState.issues}
           keyExtractor={keyExtractor}

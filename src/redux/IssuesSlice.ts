@@ -5,6 +5,7 @@ export type Issue = {
   title: string;
   url: string;
   id: number;
+  number: number;
 };
 
 export type OneIssue = {
@@ -17,6 +18,8 @@ export type IssuesSliceState = {
   issues: Issue[];
   issuesError: boolean;
   issuesLoading: boolean;
+  selectedIssueLoading: boolean;
+  selectedIssueError: boolean;
   nextPage: number;
   selectedIssue: OneIssue | undefined;
 };
@@ -26,7 +29,9 @@ const initialState: IssuesSliceState = {
   issuesLoading: false,
   issuesError: false,
   nextPage: 1,
-  selectedIssue: undefined,
+  selectedIssue: {body: '', state: '', title: ''},
+  selectedIssueLoading: false,
+  selectedIssueError: false,
 };
 
 export const fetchIssuesPagination = createAsyncThunk<
@@ -80,6 +85,14 @@ const issuesSlice = createSlice({
       })
       .addCase(fetchIssue.fulfilled, (state, action) => {
         state.selectedIssue = action.payload.isssue;
+      })
+      .addCase(fetchIssue.rejected, state => {
+        state.selectedIssueError = true;
+        state.selectedIssueLoading = false;
+      })
+      .addCase(fetchIssue.pending, state => {
+        state.selectedIssueError = false;
+        state.selectedIssueLoading = true;
       });
   },
 });
