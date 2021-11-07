@@ -23,7 +23,7 @@ export const homeStyles: HomeStyles = {
   textInput: {
     backgroundColor: 'rgba(255,255,255, 0.5)',
     width: '100%',
-    height: 35,
+    minHeight: 35,
     borderRadius: 25,
     fontSize: 17,
     paddingLeft: 25,

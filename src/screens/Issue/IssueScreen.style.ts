@@ -58,7 +58,7 @@ export const issueScreenStyle: IssueScreenStyle = {
     marginRight: 10,
     backgroundColor: 'rgba(255,255,255, 0.5)',
     width: '100%',
-    height: 35,
+    minHeight: 35,
     borderRadius: 25,
     fontSize: 17,
     paddingLeft: 25,
@@ -91,7 +91,6 @@ export const issueScreenStyle: IssueScreenStyle = {
     backgroundColor: '#35313d',
     marginVertical: 10,
     borderRadius: 30,
-
     padding: 10,
   },
   titleComment: {
