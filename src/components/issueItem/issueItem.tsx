@@ -1,6 +1,7 @@
 import React, {useMemo} from 'react';
 import {Text, View} from 'react-native';
 import {Issue} from '../../redux/IssuesSlice';
+import {AnimatedButton} from '../animatedButton/animatedButton';
 import {issueItemStyle} from './issueItem.style';
 
 type IssueItemProps = Partial<Issue> & {index: number};
@@ -19,6 +20,9 @@ const IssueItem = (props: IssueItemProps): JSX.Element => {
   return (
     <View style={[issueItemStyle.container, handleEvenOrOddItem]}>
       <Text style={issueItemStyle.title}>{title}</Text>
+      <AnimatedButton rippleColor="blue" style={issueItemStyle.button}>
+        <Text>i</Text>
+      </AnimatedButton>
     </View>
   );
 };

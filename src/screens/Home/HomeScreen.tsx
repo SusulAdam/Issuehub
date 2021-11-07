@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useLayoutEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {FlatList, Text, View} from 'react-native';
 import {homeStyles} from './HomeScreen.style';
 import {useDispatch, useSelector} from 'react-redux';

@@ -1,10 +1,11 @@
-import {TextStyle, ViewStyle} from 'react-native';
+import {Platform, TextStyle, ViewStyle} from 'react-native';
 
 type IssueItemStyle = {
   container: ViewStyle;
   title: TextStyle;
   EvenItem: ViewStyle;
   OddItem: ViewStyle;
+  button: ViewStyle;
 };
 
 export const issueItemStyle: IssueItemStyle = {
@@ -28,5 +29,25 @@ export const issueItemStyle: IssueItemStyle = {
   },
   OddItem: {
     backgroundColor: '#a3a0a0',
+  },
+  button: {
+    width: 40,
+    borderRadius: 30,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+    elevation: 2,
+    overflow: 'hidden',
+    backgroundColor: Platform.select({
+      ios: 'red',
+      android: 'rgb(255,55,66)',
+    }),
   },
 };
