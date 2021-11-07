@@ -41,6 +41,7 @@ export const issueScreenStyle: IssueScreenStyle = {
     maxHeight: '50%',
     height: '100%',
     marginBottom: 30,
+    marginTop: 10,
   },
   contentContainerScroll: {
     flexGrow: 1,

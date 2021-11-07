@@ -12,6 +12,7 @@ export type OneIssue = {
   state: string;
   body: any;
   title: string;
+  url: string;
 };
 
 export type IssuesSliceState = {

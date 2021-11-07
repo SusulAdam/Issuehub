@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -12,6 +12,7 @@ import {RootState} from '../../redux/store';
 import {Loading, Error} from '../../components';
 import {issueScreenStyle} from './IssueScreen.style';
 import {AnimatedButton} from '../../components/animatedButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const IssueScreen = (): JSX.Element => {
   const reduxState = useSelector((state: RootState) => state.issues);
@@ -27,6 +28,40 @@ const IssueScreen = (): JSX.Element => {
 
   const [textInputValue, onChangetextInputValue] = useState('');
 
+  const [state, setValue] = useState<{desc: string; url: string}[]>([]);
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const storeData = async value => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      console.log(jsonValue);
+      await AsyncStorage.setItem('@storage_Key', jsonValue);
+    } catch (e) {
+      // saving error
+    }
+  };
+
+  const handleComment = () => {
+    storeData({desc: textInputValue, url: reduxState.selectedIssue?.url});
+    onChangetextInputValue('');
+  };
+
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@storage_Key');
+      setValue(prevState => ({
+        ...prevState,
+        jsonValue,
+      }));
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch (e) {
+      // error reading value
+    }
+  };
+
   return (
     <>
       {reduxState.selectedIssueLoading && <Loading />}
@@ -39,6 +74,11 @@ const IssueScreen = (): JSX.Element => {
         style={issueScreenStyle.keyBoard}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <View style={issueScreenStyle.container}>
+          {/* {state !== [] &&
+            state.map(item => {
+              return <Text>{item.desc}</Text>;
+            })} */}
+          {/* //   <Text>{state.map((item)=> )}</Text> */}
           <Text style={issueScreenStyle.title}>
             {reduxState.selectedIssue?.title}
           </Text>
@@ -57,7 +97,10 @@ const IssueScreen = (): JSX.Element => {
               value={textInputValue}
               onChangeText={onChangetextInputValue}
             />
-            <AnimatedButton style={issueScreenStyle.button} rippleColor="red">
+            <AnimatedButton
+              style={issueScreenStyle.button}
+              rippleColor="red"
+              onPress={handleComment}>
               <Text style={issueScreenStyle.textButton}>Add</Text>
             </AnimatedButton>
           </View>
