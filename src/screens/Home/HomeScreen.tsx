@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {FlatList, Text, View} from 'react-native';
 import {homeStyles} from './HomeScreen.style';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../redux/store';
 import {Loading, Error} from '../../components';
-import {fetchIssuesPagination} from '../../redux/IssuesSlice';
+import {fetchIssuesPagination, Issue} from '../../redux/IssuesSlice';
 
 const HomeScreen = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -14,11 +14,24 @@ const HomeScreen = (): JSX.Element => {
     dispatch(fetchIssuesPagination({page: 1}));
   }, [dispatch]);
 
-  const handleOnEndEached = () => {
+  const handleOnEndReached = () => {
     if (!reduxState.issuesError && !reduxState.issuesLoading) {
       dispatch(fetchIssuesPagination({page: reduxState.nextPage}));
     }
   };
+
+  const keyExtractor = useCallback((_, index: number) => `key: ${index}`, []);
+
+  const renderItem = useCallback(
+    ({item}: {item: Issue}) => (
+      <View style={homeStyles.container}>
+        <Text>{item.id}</Text>
+        <Text>{item.title}</Text>
+        <Text>{item.url}</Text>
+      </View>
+    ),
+    [],
+  );
 
   return (
     <>
@@ -28,22 +41,12 @@ const HomeScreen = (): JSX.Element => {
           <Text>Error- please reload app</Text>
         </Error>
       )}
-      {!reduxState.issuesLoading && !reduxState.issuesError && (
-        <FlatList
-          data={reduxState.issues}
-          keyExtractor={(_, index) => `key: ${index}`}
-          onEndReached={handleOnEndEached}
-          renderItem={item => {
-            return (
-              <View style={homeStyles.container}>
-                <Text>{item.item.id}</Text>
-                <Text>{item.item.title}</Text>
-                <Text>{item.item.url}</Text>
-              </View>
-            );
-          }}
-        />
-      )}
+      <FlatList
+        data={reduxState.issues}
+        keyExtractor={keyExtractor}
+        onEndReached={handleOnEndReached}
+        renderItem={renderItem}
+      />
     </>
   );
 };

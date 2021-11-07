@@ -24,15 +24,15 @@ const initialState: IssuesSliceState = {
 export const fetchIssuesPagination = createAsyncThunk<
   {issues: Issue[]},
   {page: number}
->('fetchIssuesPagination', async ({page}) => {
+>('fetchIssues', async ({page}) => {
   const response = await fetchIssues(page, 20);
 
-  if ((response.kind = 'success')) {
+  if (response.kind === 'success') {
     return {
       issues: response.body ?? [],
     };
   } else {
-    throw 'Error fetching issues';
+    throw 'Error fetching users';
   }
 });
 
@@ -42,15 +42,14 @@ const issuesSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(fetchIssuesPagination.fulfilled, (state, action) => {
-        state.issues = state.issues.concat(action.payload.issues);
-        state.issuesError = false;
-        state.issuesLoading = false;
-        state.nextPage += 1;
-      })
       .addCase(fetchIssuesPagination.pending, state => {
         state.issuesLoading = true;
         state.issuesError = false;
+      })
+      .addCase(fetchIssuesPagination.fulfilled, (state, action) => {
+        state.nextPage += 1;
+        state.issues = state.issues.concat(action.payload.issues);
+        state.issuesLoading = false;
       })
       .addCase(fetchIssuesPagination.rejected, state => {
         state.issuesError = true;
